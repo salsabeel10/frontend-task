@@ -1,15 +1,17 @@
-import Navbar from './components/Navbar'
-import PostList from './components/PostList'
-import PostListD from './components/PostListD'
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home'
+import AddPost from './pages/AddPost'
 
 const App = () => {
   return (
     <div>
-      <Navbar />
-      <div className="min-h-screen flex items-center justify-center">
-        <PostList />
-        {/* <PostListD /> */}
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path='/add' element={<AddPost />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
