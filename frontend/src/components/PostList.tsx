@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
 
 const PostList = () => {
-  const { posts, fetchPosts } = usePostStore();
+  const { posts, fetchPosts,deletePost } = usePostStore();
 
   useEffect(() => {
     fetchPosts();
@@ -24,13 +24,18 @@ const PostList = () => {
                 {String(index + 1).padStart(2, '0')}
               </div>
               <div className="text-center flex-1">
-                <div className="font-extrabold text-lg uppercase">{post.title.slice(0,10)}</div>
+                <div className="font-extrabold text-lg uppercase">
+                  {post.title.slice(0, 10)}
+                </div>
                 <div className="text-xs font-semibold opacity-60">
                   {post.body.slice(0, 30)}...
                 </div>
               </div>
               <div className="flex gap-2">
-                <button className="btn btn-sm btn-ghost text-red-500">
+                <button
+                  className="btn btn-sm btn-ghost text-red-500"
+                  onClick={() => deletePost(post.id)}
+                >
                   <MdDelete size={18} />
                 </button>
                 <button className="btn btn-sm btn-ghost text-blue-500">

@@ -1,5 +1,4 @@
-import { MdDelete } from 'react-icons/md'
-import { FaPen } from 'react-icons/fa'
+
 
 const PostListD = () => {
   return (
