@@ -20,27 +20,31 @@ const PostForm = () => {
   return (
     <div className="flex justify-center items-center min-h-screen  p-4 pb-24">
       <div className="w-full max-w-lg bg-base-100 shadow-xl border border-gray-300 rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center mb-4 underline">Add a Post</h2>
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Title</legend>
+        <h2 className="text-2xl font-bold text-center mb-4 underline">
+          Add a Post
+        </h2>
+        <fieldset className="p-4 rounded-md ">
+          <legend className="text-lg font-semibold leading-0 pt-3">Title</legend>
           <input
             type="text"
-            className="input input-bordered w-full"
+            className="w-full p-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-gray-500"
             placeholder="Enter Title"
             value={title}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
 
-          <legend className="fieldset-legend mt-4">Description</legend>
+          <legend className="text-lg font-semibold mt-4">Description</legend>
           <textarea
-            className="textarea textarea-bordered w-full h-24"
+            className="w-full p-2 border border-gray-300 rounded-md h-24 focus:outline-none focus:ring-2 focus:ring-gray-500"
             placeholder="Enter Here"
             value={body}
-            onChange={(e)=>setBody(e.target.value)}
+            onChange={(e) => setBody(e.target.value)}
           ></textarea>
         </fieldset>
 
-        <button onClick={handleAddPost} className="btn btn-primary w-full mt-6">Submit</button>
+        <button onClick={handleAddPost} className="btn btn-neutral w-full mt-4">
+          Submit
+        </button>
       </div>
     </div>
   )
