@@ -4,22 +4,34 @@ import { MdDelete } from 'react-icons/md'
 import { FaPen } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
-
 const PostList = () => {
-  const { posts, loading, fetchPosts, deletePost } = usePostStore()
+  const {
+    posts,
+    loading,
+    fetchPosts,
+    deletePost,
+    fetchPostById,
+    setSelectedPost,
+  } = usePostStore()
   const navigate = useNavigate()
 
+  // Fetch posts only once on component mount
+  useEffect(() => {
+    fetchPosts()
+  }, [fetchPosts])
+
+  // Debugging: Log posts when they change
+  useEffect(() => {
+    console.log('Posts updated:', posts)
+  }, [posts])
+
   const handleEdit = async (postId: number) => {
-    const post = await usePostStore.getState().fetchPostById(postId)
+    const post = await fetchPostById(postId)
     if (post) {
-      usePostStore.getState().setSelectedPost(post) // Set post in store
+      setSelectedPost(post) // Set post in store
       navigate(`/edit/${postId}`) // Navigate to edit page
     }
   }
-
-  useEffect(() => {
-    fetchPosts()
-  }, [])
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-32">
@@ -56,7 +68,10 @@ const PostList = () => {
                     >
                       <MdDelete size={18} />
                     </button>
-                    <button onClick={()=>handleEdit(post.id)} className="btn btn-sm btn-ghost text-blue-500">
+                    <button
+                      onClick={() => handleEdit(post.id)}
+                      className="btn btn-sm btn-ghost text-blue-500"
+                    >
                       <FaPen size={16} />
                     </button>
                   </div>

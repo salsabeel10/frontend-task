@@ -19,6 +19,7 @@ interface PostStore {
   fetchPostById: (id: number) => Promise<Post | null>
   addPost: (newPost: Omit<Post, 'id'>) => void
   deletePost: (id: number) => Promise<void>
+  updatePost: (id: number, updatedPost: Partial<Post>) => Promise<void>
 }
 
 export const usePostStore = create<PostStore>((set, get) => ({
@@ -29,12 +30,18 @@ export const usePostStore = create<PostStore>((set, get) => ({
   fetchPosts: async () => {
     set({ loading: true })
     try {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
-
-      const fetchedPosts = res.data.slice(0, 4) // First 4 API posts
-      const existingPosts = get().posts.filter((p) => p.id >= 101) // Keep manually added posts
-
-      set({ posts: [...fetchedPosts, ...existingPosts] })
+      // Only fetch posts if the posts array is empty
+      if (get().posts.length === 0) {
+        const res = await axios.get(
+          'https://jsonplaceholder.typicode.com/posts',
+          {
+            params: {
+              _limit: 4, // Fetch only 4 posts
+            },
+          }
+        )
+        set({ posts: res.data }) // Set the fetched posts
+      }
     } catch (error) {
       console.error('Error fetching posts:', error)
     } finally {
@@ -56,9 +63,11 @@ export const usePostStore = create<PostStore>((set, get) => ({
 
   setSelectedPost: (post: Post | null) => set({ selectedPost: post }),
 
+  // Add a new post (will be the 5th post and beyond)
   addPost: async (newPost) => {
     set({ loading: true })
     try {
+      // Simulate a POST request to the API
       const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         body: JSON.stringify(newPost),
@@ -69,11 +78,13 @@ export const usePostStore = create<PostStore>((set, get) => ({
       const createdPost = await res.json()
 
       set((state) => {
-        // Get the highest ID among manually added posts
-        const lastPostId = state.posts
-          .filter((p) => p.id >= 101)
-          .reduce((max, p) => Math.max(max, p.id), 100) // Start from 100
+        // Get the highest ID among existing posts
+        const lastPostId = state.posts.reduce(
+          (max, p) => Math.max(max, p.id),
+          0
+        )
 
+        // Add the new post with an incremented ID
         return {
           posts: [...state.posts, { ...createdPost, id: lastPostId + 1 }],
           loading: false,
@@ -84,6 +95,26 @@ export const usePostStore = create<PostStore>((set, get) => ({
       set({ loading: false })
     }
   },
+  updatePost: async (id, updatedPost) => {
+    try {
+      const response = await axios.patch(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        updatedPost
+      )
+      const updatedData = response.data
+
+      set((state) => {
+        const updatedPosts = state.posts.map((post) =>
+          post.id === id ? { ...post, ...updatedData } : post
+        )
+        console.log('Updated Posts (Local):', updatedPosts) // Debugging
+        return { posts: updatedPosts }
+      })
+    } catch (error) {
+      console.error('Error updating post:', error)
+    }
+  },
+
   deletePost: async (id: number) => {
     try {
       await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
