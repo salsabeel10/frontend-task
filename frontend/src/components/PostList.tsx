@@ -1,26 +1,27 @@
-import { useEffect } from "react";
-import { usePostStore } from "../store/postStore";
-import { MdDelete } from "react-icons/md";
-import { FaPen } from "react-icons/fa";
+import { useEffect } from 'react'
+import { usePostStore } from '../store/postStore'
+import { MdDelete } from 'react-icons/md'
+import { FaPen } from 'react-icons/fa'
 
 const PostList = () => {
-  const { posts,loading ,fetchPosts,deletePost } = usePostStore();
+  const { posts, loading, fetchPosts, deletePost } = usePostStore()
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    fetchPosts()
+  }, [])
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-32">
       <div className="w-full max-w-lg rounded-lg p-6">
         <h1 className="text-xl font-bold text-center mb-4 underline">Posts</h1>
+
         {/* Show loading UI when fetching */}
         {loading ? (
           <div className="flex justify-center items-center py-10">
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <ul className="w-full min-h-[300px] bg-base-100 rounded-box shadow-lg p-4">
+          <ul className="w-full min-h-[300px] bg-base-100 border border-gray-200 rounded-box shadow-lg p-4">
             {posts.map((post, index) => (
               <li
                 key={post.id}
@@ -55,6 +56,6 @@ const PostList = () => {
       </div>
     </div>
   )
-};
+}
 
-export default PostList;
+export default PostList

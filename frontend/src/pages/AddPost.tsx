@@ -1,8 +1,13 @@
-import React from 'react'
+import PostForm from '../components/PostForm'
+import Navbar from '../components/Navbar'
+
 
 const AddPost = () => {
   return (
-    <div>AddPost</div>
+    <div>
+        <Navbar />
+        <PostForm />
+    </div>
   )
 }
 
