@@ -2,9 +2,20 @@ import { useEffect } from 'react'
 import { usePostStore } from '../store/postStore'
 import { MdDelete } from 'react-icons/md'
 import { FaPen } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+
 
 const PostList = () => {
   const { posts, loading, fetchPosts, deletePost } = usePostStore()
+  const navigate = useNavigate()
+
+  const handleEdit = async (postId: number) => {
+    const post = await usePostStore.getState().fetchPostById(postId)
+    if (post) {
+      usePostStore.getState().setSelectedPost(post) // Set post in store
+      navigate(`/edit/${postId}`) // Navigate to edit page
+    }
+  }
 
   useEffect(() => {
     fetchPosts()
@@ -45,7 +56,7 @@ const PostList = () => {
                     >
                       <MdDelete size={18} />
                     </button>
-                    <button className="btn btn-sm btn-ghost text-blue-500">
+                    <button onClick={()=>handleEdit(post.id)} className="btn btn-sm btn-ghost text-blue-500">
                       <FaPen size={16} />
                     </button>
                   </div>

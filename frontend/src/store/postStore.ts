@@ -13,14 +13,18 @@ interface Post {
 interface PostStore {
   posts: Post[]
   loading: boolean
+  selectedPost: Post | null
+  setSelectedPost: (post: Post | null) => void
   fetchPosts: () => Promise<void>
+  fetchPostById: (id: number) => Promise<Post | null>
+  addPost: (newPost: Omit<Post, 'id'>) => void
   deletePost: (id: number) => Promise<void>
-  addPost: (newPost: Omit<Post, 'id'>) => void;
 }
 
 export const usePostStore = create<PostStore>((set, get) => ({
   posts: [],
   loading: false,
+  selectedPost: null,
 
   fetchPosts: async () => {
     set({ loading: true })
@@ -37,9 +41,23 @@ export const usePostStore = create<PostStore>((set, get) => ({
       set({ loading: false })
     }
   },
+  fetchPostById: async (id: number) => {
+    try {
+      const res = await axios.get(
+        `https://jsonplaceholder.typicode.com/posts/${id}`
+      )
+      set({ selectedPost: res.data }) // Store the selected post
+      return res.data
+    } catch (error) {
+      console.error('Error fetching post:', error)
+      return null
+    }
+  },
+
+  setSelectedPost: (post: Post | null) => set({ selectedPost: post }),
 
   addPost: async (newPost) => {
-    set({loading:true})
+    set({ loading: true })
     try {
       const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
@@ -58,12 +76,12 @@ export const usePostStore = create<PostStore>((set, get) => ({
 
         return {
           posts: [...state.posts, { ...createdPost, id: lastPostId + 1 }],
-          loading:false,
+          loading: false,
         }
       })
     } catch (error) {
       console.error('Error adding post:', error)
-      set({loading:false})
+      set({ loading: false })
     }
   },
   deletePost: async (id: number) => {
