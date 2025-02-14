@@ -1,6 +1,6 @@
 # Blog App
 
-A simple blog application where users can add, edit, and delete posts. Posts are fetched from JSONPlaceholder API.
+A user-friendly blog application that allows users to create, edit, and delete posts effortlessly. It provides a clean and fully responsive design, fetching posts dynamically from the JSONPlaceholder API.
 
 ## Features
 
