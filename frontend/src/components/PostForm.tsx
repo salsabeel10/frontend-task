@@ -36,7 +36,7 @@ const PostForm = () => {
           <legend className="text-lg font-semibold mt-4">Description</legend>
           <textarea
             className="w-full p-2 border border-gray-300 rounded-md h-24 focus:outline-none focus:ring-2 focus:ring-gray-500"
-            placeholder="Enter Here"
+            placeholder="Enter Description"
             value={body}
             onChange={(e) => setBody(e.target.value)}
           ></textarea>
