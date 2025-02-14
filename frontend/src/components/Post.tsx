@@ -31,14 +31,24 @@ const Post = () => {
     }
   }, [id, selectedPost, fetchPostById, setSelectedPost])
 
-  if (loading) return <p>Loading post...</p>
-
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-[210mm] mb-48 bg-white shadow-lg p-8 flex flex-col text-center">
-        <h1 className="text-3xl font-bold font-serif underline">{title.slice(0,13)}</h1>
-        <p className="mt-4 text-lg text-gray-600 font-mono">{body}</p>
-      </div>
+      {/* Title and Body Content */}
+      {!loading && (
+        <div className="w-[210mm] mb-48 bg-white shadow-lg p-8 flex flex-col text-center">
+          <h1 className="text-3xl font-bold font-serif underline">
+            {title.slice(0, 13)}
+          </h1>
+          <p className="mt-4 text-lg text-gray-600 font-mono">{body}</p>
+        </div>
+      )}
+
+      {/* Loading Spinner */}
+      {loading && (
+        <div className="absolute flex justify-center items-center w-[210mm] mb-48 p-8">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      )}
     </div>
   )
 }
