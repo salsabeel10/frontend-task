@@ -133,6 +133,10 @@ export const usePostStore = create<PostStore>((set, get) => ({
   },
 
   deletePost: async (id: number) => {
+    const isConfirmed = window.confirm(
+      'Are you sure you want to delete this post?'
+    )
+    if (!isConfirmed) return
     try {
       await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       set((state) => ({
