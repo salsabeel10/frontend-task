@@ -33,7 +33,7 @@ Follow these steps to run the project locally:
    ```
 2. Navigate to the project directory:
    ```sh
-   cd blog-app
+   cd frontend
    ```
 3. Install dependencies:
    ```sh
@@ -53,8 +53,6 @@ The app should now be running at `http://localhost:5173/` (or the port specified
 ![EditPostpage](frontend/screenshots/EditPage.png)
 ![filter](frontend/screenshots/filter.png)
 
-
-*(Replace ******`screenshot.png`****** with the actual screenshot of your app.)*
 
 ## License
 
