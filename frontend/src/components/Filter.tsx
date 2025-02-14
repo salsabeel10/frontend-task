@@ -7,10 +7,13 @@ const Filter = () => {
   return (
     <div>
       <details className="dropdown">
-        <summary className="btn btn-ghost text-black m-1">
+        <summary className="btn btn-ghost text-black m-1 mr-5">
           <IoFilter />
         </summary>
-        <ul className="menu dropdown-content bg-white rounded-box z-10 w-36 p-2 shadow-sm">
+        <ul
+          className="menu dropdown-content bg-white rounded-box z-10 p-0 w-30 border border-gray-300 shadow-sm"
+          style={{ right: -18 }}
+        >
           <li onClick={toggleSortOrder}>
             <a className="flex items-center">
               {sortOrder === 'asc' ? (
