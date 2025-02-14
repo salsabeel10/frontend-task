@@ -3,7 +3,6 @@ import { usePostStore } from '../store/postStore'
 import { MdDelete } from 'react-icons/md'
 import { FaPen } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import { FiFilter } from 'react-icons/fi'
 import Filter from './Filter'
 
 const PostList = () => {

@@ -6,7 +6,7 @@ interface Post {
   id: number
   title: string
   body: string
-  userId?:number
+  userId?: number
 }
 
 // Define Store
@@ -20,12 +20,15 @@ interface PostStore {
   addPost: (newPost: Omit<Post, 'id'>) => void
   deletePost: (id: number) => Promise<void>
   updatePost: (id: number, updatedPost: Partial<Post>) => Promise<void>
+  sortOrder: 'asc' | 'desc'
+  toggleSortOrder: () => void
 }
 
 export const usePostStore = create<PostStore>((set, get) => ({
   posts: [],
   loading: false,
   selectedPost: null,
+  sortOrder: 'asc',
 
   fetchPosts: async () => {
     set({ loading: true })
@@ -47,6 +50,20 @@ export const usePostStore = create<PostStore>((set, get) => ({
     } finally {
       set({ loading: false })
     }
+  },
+  toggleSortOrder: () => {
+    const { posts, sortOrder } = get()
+
+    // Sort posts based on the current order
+    const sortedPosts = [...posts].sort((a, b) => {
+      return sortOrder === 'asc' ? a.id - b.id : b.id - a.id
+    })
+
+    // Toggle sorting order and update posts
+    set({
+      posts: sortedPosts,
+      sortOrder: sortOrder === 'asc' ? 'desc' : 'asc',
+    })
   },
   fetchPostById: async (id: number) => {
     try {
