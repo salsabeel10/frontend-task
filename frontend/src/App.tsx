@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AddPost from './pages/AddPost'
 import EditPost from './pages/EditPost'
+import PostPage from './pages/PostPage'
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/add" element={<AddPost />} />
           <Route path="/edit/:id" element={<EditPost />} />
+          <Route path="/post/:id" element={<PostPage />} />
         </Routes>
       </Router>
     </div>

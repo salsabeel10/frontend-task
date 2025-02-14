@@ -44,7 +44,7 @@ const EditForm = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 pb-24">
-      <div className="w-full max-w-lg bg-base-100 shadow-xl border border-gray-300 rounded-lg p-6">
+      <div className="w-full max-w-lg bg-white shadow-xl border border-gray-300 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center mb-4 underline">
           Edit Post
         </h2>

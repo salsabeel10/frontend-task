@@ -32,6 +32,13 @@ const PostList = () => {
       navigate(`/edit/${postId}`) // Navigate to edit page
     }
   }
+  const handlePost = async (postId: number) => {
+    const post = await fetchPostById(postId)
+    if (post) {
+      setSelectedPost(post) // Set post in store
+      navigate(`/post/${postId}`) // Navigate to edit page
+    }
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen pb-32">
@@ -43,7 +50,7 @@ const PostList = () => {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <ul className="w-full bg-base-100 border border-gray-200 rounded-box shadow-lg p-4">
+          <ul className="w-full border border-gray-200 bg-white rounded-box shadow-lg p-4">
             {posts.length > 0 ? (
               posts.map((post, index) => (
                 <li
@@ -53,7 +60,7 @@ const PostList = () => {
                   <div className="text-lg font-semibold text-gray-700 w-8 text-center">
                     {String(index + 1).padStart(2, '0')}
                   </div>
-                  <div className="text-center flex-1">
+                  <div onClick={()=>handlePost(post.id)} className="text-center flex-1 cursor-pointer">
                     <div className="font-extrabold text-lg uppercase">
                       {post.title.slice(0, 10)}
                     </div>
