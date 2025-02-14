@@ -3,6 +3,8 @@ import { usePostStore } from '../store/postStore'
 import { MdDelete } from 'react-icons/md'
 import { FaPen } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import { FiFilter } from 'react-icons/fi'
+import Filter from './Filter'
 
 const PostList = () => {
   const {
@@ -43,7 +45,13 @@ const PostList = () => {
   return (
     <div className="flex justify-center items-center min-h-screen pb-32">
       <div className="w-full max-w-lg rounded-lg p-6">
-        <h1 className="text-xl font-bold text-center mb-4 underline">Posts</h1>
+        <div className="relative flex justify-center items-center mb-4">
+          <h1 className="text-xl font-bold underline">Posts</h1>
+          {/* Filter Button Positioned to the Right */}
+          <div className="absolute right-0 p-2">
+            <Filter />
+          </div>
+        </div>
         {/* Show loading UI when fetching */}
         {loading ? (
           <div className="flex justify-center items-center py-10">
@@ -57,14 +65,20 @@ const PostList = () => {
                   key={post.id}
                   className="list-row flex items-center justify-between p-4 border-b last:border-none"
                 >
-                  <div className="text-lg font-semibold text-gray-700 w-8 text-center">
+                  <div
+                    onClick={() => handlePost(post.id)}
+                    className="text-lg font-semibold text-gray-700 w-8 text-center cursor-pointer"
+                  >
                     {String(index + 1).padStart(2, '0')}
                   </div>
-                  <div onClick={()=>handlePost(post.id)} className="text-center flex-1 cursor-pointer">
-                    <div className="font-extrabold text-lg uppercase">
-                      {post.title.slice(0, 10)}
+                  <div
+                    onClick={() => handlePost(post.id)}
+                    className="text-center flex-1 cursor-pointer"
+                  >
+                    <div className="font-extrabold text-lg uppercase font-serif">
+                      {post.title.slice(0, 12)}
                     </div>
-                    <div className="text-xs font-semibold opacity-60">
+                    <div className="text-xs font-semibold opacity-60 font-sans">
                       {post.body.slice(0, 30)}...
                     </div>
                   </div>
