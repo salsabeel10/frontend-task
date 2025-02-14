@@ -2,6 +2,10 @@
 
 A user-friendly blog application that allows users to create, edit, and delete posts effortlessly. It provides a clean and fully responsive design, fetching posts dynamically from the JSONPlaceholder API.
 
+## Live Demo
+Check out the live version of the app: [Project URL](https://post-blogs-1.netlify.app/)
+
+
 ## Features
 
 - Add a new post with a title and body
